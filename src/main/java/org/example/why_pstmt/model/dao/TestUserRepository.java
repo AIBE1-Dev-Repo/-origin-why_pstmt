@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 @Repository
 public class TestUserRepository {
@@ -23,8 +24,11 @@ public class TestUserRepository {
         connection = DriverManager.getConnection(url, username, password);
     }
 
-    public void createTestUser(String username, String password) {
-
+    public void createTestUser(String username, String password) throws SQLException {
+        Statement stmt = connection.createStatement();
+        String sql = "INSERT INTO test_user (username, password) VALUES ('%s', '%s')".formatted(username, password);
+        // executeUpdate VS executeQuery
+        stmt.executeUpdate(sql);
     }
 
     public boolean login(String username, String password) {
