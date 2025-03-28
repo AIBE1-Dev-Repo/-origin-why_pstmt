@@ -3,10 +3,7 @@ package org.example.why_pstmt.model.dao;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 @Repository
 public class TestUserRepository {
@@ -32,7 +29,11 @@ public class TestUserRepository {
         stmt.executeUpdate(sql);
     }
 
-    public boolean login(String username, String password) {
-        return false;
+    public boolean login(String username, String password) throws SQLException {
+        Statement stmt = connection.createStatement();
+        String sql = "SELECT * FROM test_user WHERE username = '%s' and password = '%s'".formatted(username, password);
+        ResultSet rs = stmt.executeQuery(sql);
+
+        return rs.next(); // 데이터가 존재하는지 여부
     }
 }
