@@ -13,7 +13,8 @@ public class TestUserRepository {
     private final Connection connection;
     private final Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
 
-    public TestUserRepository() throws SQLException {
+    public TestUserRepository() throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.cj.jdbc.Driver"); // 주의!
         String url = "jdbc:mysql://%s:%s/%s".formatted(
                 dotenv.get("DB_HOST"),
                 dotenv.get("DB_PORT"),

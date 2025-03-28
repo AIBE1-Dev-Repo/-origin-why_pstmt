@@ -6,5 +6,15 @@
 </head>
 <body>
     <h1>안녕 안녕</h1>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                    <a href="join">가입</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
 </body>
 </html>
