@@ -23,16 +23,27 @@ public class TestUserRepository {
     }
 
     public void createTestUser(String username, String password) throws SQLException {
-        Statement stmt = connection.createStatement();
-        String sql = "INSERT INTO test_user (username, password) VALUES ('%s', '%s')".formatted(username, password);
+//        Statement stmt = connection.createStatement();
+//        String sql = "INSERT INTO test_user (username, password) VALUES ('%s', '%s')".formatted(username, password);
         // executeUpdate VS executeQuery
-        stmt.executeUpdate(sql);
+//        stmt.executeUpdate(sql);
+        String sql = "INSERT INTO test_user (username, password) VALUES (?, ?)";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, username);
+        pstmt.setString(2, password);
+        pstmt.executeUpdate();
     }
 
     public boolean login(String username, String password) throws SQLException {
-        Statement stmt = connection.createStatement();
-        String sql = "SELECT * FROM test_user WHERE username = '%s' and password = '%s'".formatted(username, password);
-        ResultSet rs = stmt.executeQuery(sql);
+//        Statement stmt = connection.createStatement();
+//        // 패스워드에 ' OR '1'='1 입력 시 뚫림
+//        String sql = "SELECT * FROM test_user WHERE username = '%s' and password = '%s'".formatted(username, password);
+//        ResultSet rs = stmt.executeQuery(sql);
+        String sql = "SELECT * FROM test_user WHERE username = ? AND password = ?";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, username);
+        pstmt.setString(2, password);
+        ResultSet rs = pstmt.executeQuery();
 
         return rs.next(); // 데이터가 존재하는지 여부
     }
